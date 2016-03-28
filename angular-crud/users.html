@@ -1,0 +1,44 @@
+<table class=" table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>
+        ID
+      </th>
+      <th>
+        <a href="#" ng-click="sortType = 'name'; sortReverse = !sortReverse ">
+          Name
+          <span ng-show="sortType == 'name' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'name' && sortReverse " class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th>
+        <a href="#" ng-click="sortType = 'experience'; sortReverse = !sortReverse ">
+          Experience
+          <span ng-show="sortType == 'experience' && !sortReverse" class="fa fa-caret-down"></span>
+          <span ng-show="sortType == 'experience' && sortReverse" class="fa fa-caret-up"></span>
+        </a>
+      </th>
+      <th> <a href="#" ng-click="sortType = 'age'; sortReverse = !sortReverse">
+        Age
+        <span ng-show="sortType == 'age' && !sortReverse" class="fa fa-caret-down"></span>
+        <span ng-show="sortType == 'age' && sortReverse" class="fa fa-caret-up"></span>
+      </a></th>
+      <th>Remove</th>
+      <th>Edit</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr ng-repeat="(index, user) in users | orderBy:sortType:sortReverse | filter:searchFor:searchString">
+      <td>{{ index + 1 }}</td>
+      <td>{{ user.name }}</td>
+      <td>{{ user.experience }}</td>
+      <td>{{ user.age }}</td>
+      <td>
+        <input type="button" value="Remove" class="btn btn-danger" ng-click="removeRow(users.indexOf(user), user.id)" method = 'delete'/>
+      </td>
+      <td>
+        <input type="button" value="Edit" class="btn btn-primary" ng-click="editRow(x.Name)"/>
+      </td>
+    </tr>
+  <tbody>
+</table>
