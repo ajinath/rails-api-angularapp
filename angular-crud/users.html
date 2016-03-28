@@ -34,7 +34,10 @@
       <td>{{ user.experience }}</td>
       <td>{{ user.age }}</td>
       <td>
-        <input type="button" value="Remove" class="btn btn-danger" ng-click="removeRow(users.indexOf(user), user.id)" method = 'delete'/>
+        <a href ="#" class ="btn btn-info" ng-click="viewData(users.indexOf(user), user.id)" data-toggle="modal" data-target="#showuser"> View </a>
+      </td>
+      <td>
+        <input type="button" value="Remove" class="btn btn-danger" ng-click="removeRow(users.indexOf(user), user.id)"/>
       </td>
       <td>
         <input type="button" value="Edit" class="btn btn-primary" ng-click="editRow(x.Name)"/>

@@ -1,15 +1,18 @@
 var app = angular.module('myApp', []);
 
+var host = "https://angular-api-rails.herokuapp.com/users/"
+// var host =  "http://localhost:3000/users/"
+
 app.controller('usersCtrl',function($scope, $http){
   $scope.sortReverse  = false;  // set the default sort order
   $scope.users = [];
-  $http.get('https://angular-api-rails.herokuapp.com/').then(function(response) {
+  $http.get(host).then(function(response) {
     $scope.users = response.data;
   });
 
   $scope.temp = []
   $scope.resetAll = function(){
-      $http.get('https://angular-api-rails.herokuapp.com/').then(function(response) {
+      $http.get(host).then(function(response) {
         $scope.temp = response.data;
      });
   };
@@ -17,14 +20,18 @@ app.controller('usersCtrl',function($scope, $http){
 
   $scope.removeRow = function(index, id){
     user_id = id;
-    var config = {
-      headers : {
-        'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
-        }
-      }
-    $http.delete('https://angular-api-rails.herokuapp.com/users/' + user_id, [config] ).success(function(response){
-    $scope.users.splice(index, 1)
+    url = host + user_id;
+    $http.delete(url).success(function(response){
+      $scope.users.splice(index, 1)
+    })
+  };
 
+  $scope.viewData = function(index, id){
+    user_id = id;
+     $http.get( host + user_id).success(function(response){
+      $("#name").html(response.name);
+      $("#experience").html(response.experience);
+      $("#age").html(response.age)
     })
   };
 
@@ -32,14 +39,14 @@ app.controller('usersCtrl',function($scope, $http){
 
     user = { 'name':$scope.name, 'experience':$scope.experience, 'age': $scope.age }
 
-    create_user_url = "https://angular-api-rails.herokuapp.com/users";
+    // create_user_url = "https://angular-api-rails.herokuapp.com/users";
 
     var config = {
       headers : {
         'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8;'
         }
       }
-    $http.post(create_user_url, user, config ).success(function(response){
+    $http.post(host, user, config ).success(function(response){
       $('#myModal').modal('hide');
       $scope.users.push(user);
       $scope.name = ""
@@ -74,6 +81,13 @@ app.directive('newUser', function() {
 app.directive('headerDetail', function() {
   return {
     templateUrl: 'header-detail.html'
+  };
+});
+
+
+app.directive('showUser', function() {
+  return {
+    templateUrl: 'show-user.html'
   };
 });
 
