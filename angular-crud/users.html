@@ -18,26 +18,29 @@
           <span ng-show="sortType == 'experience' && sortReverse" class="fa fa-caret-up"></span>
         </a>
       </th>
-      <th> <a href="#" ng-click="sortType = 'age'; sortReverse = !sortReverse">
-        Age
+      <th>
+        <a href="#" ng-click="sortType = 'age'; sortReverse = !sortReverse">
+          Age
         <span ng-show="sortType == 'age' && !sortReverse" class="fa fa-caret-down"></span>
         <span ng-show="sortType == 'age' && sortReverse" class="fa fa-caret-up"></span>
-      </a></th>
+        </a>
+      </th>
+      <th> View </th>
       <th>Remove</th>
       <th>Edit</th>
     </tr>
   </thead>
   <tbody>
-    <tr ng-repeat="(index, user) in users | orderBy:sortType:sortReverse | filter:searchFor:searchString">
-      <td>{{ index + 1 }}</td>
+    <tr dir-paginate ="(index, user) in users | orderBy:sortType:sortReverse | filter:searchFor:searchString | itemsPerPage:5">
+      <td>{{ user.id }}</td>
       <td>{{ user.name }}</td>
       <td>{{ user.experience }}</td>
       <td>{{ user.age }}</td>
       <td>
-        <a href ="#" class ="btn btn-info" ng-click="viewData(users.indexOf(user), user.id)" data-toggle="modal" data-target="#showuser"> View </a>
+        <a href ="#" class ="btn btn-info" ng-click="viewData(user)" data-toggle="modal" data-target="#showuser"> View </a>
       </td>
       <td>
-        <input type="button" value="Remove" class="btn btn-danger" ng-click="removeRow(users.indexOf(user), user.id)"/>
+        <input type="button" value="Remove" class="btn btn-danger" ng-click="removeRow(users.indexOf(user), user)"/>
       </td>
       <td>
         <input type="button" value="Edit" class="btn btn-primary" ng-click="editRow(x.Name)"/>
@@ -45,3 +48,10 @@
     </tr>
   <tbody>
 </table>
+<div class="pull-right">
+  <dir-pagination-controls
+    max-size="5"
+    direction-links="true"
+    boundary-links="true" >
+  </dir-pagination-controls>
+</div>

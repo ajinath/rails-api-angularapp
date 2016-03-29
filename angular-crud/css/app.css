@@ -25,3 +25,9 @@ table tr:nth-child(even) {
 .header button{
   float: right;
 }
+.se-pre-con {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: url(../img/Preloader_2.gif) center no-repeat #fff;
+}
